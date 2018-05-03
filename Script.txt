@@ -1,0 +1,340 @@
+CREATE TABLE Echipe (
+id_e number(2) CONSTRAINT PK_Echipe PRIMARY KEY,
+nume varchar2(30) NOT NULL,
+oras varchar2(30) NOT NULL
+);
+
+INSERT ALL
+   INTO Echipe (id_e, nume, oras) VALUES (1, 'The Ones', 'Bucuresti')
+   INTO Echipe (id_e, nume, oras) VALUES (2, 'Twos', 'Cluj')
+   INTO Echipe (id_e, nume, oras) VALUES (3, 'Red', 'Iasi')
+   INTO Echipe (id_e, nume, oras) VALUES (4, 'Green', 'Timisoara')
+   INTO Echipe (id_e, nume, oras) VALUES (5, 'The 5th', 'Bucursti')
+SELECT 1 FROM DUAL;
+
+CREATE TABLE Videouri(
+id_v number(2) CONSTRAINT PK_Videouri PRIMARY KEY,
+nr_likeuri number NOT NULL,
+durata number(2) NOT NULL,
+data_postare date NOT NULL
+);
+
+INSERT ALL
+   INTO Videouri (id_v, nr_likeuri, durata, data_postare) VALUES (1, 19653, 3, '08/26/2017')
+   INTO Videouri (id_v, nr_likeuri, durata, data_postare) VALUES (2, 18562, 5, '09/26/2017')
+   INTO Videouri (id_v, nr_likeuri, durata, data_postare) VALUES (3, 20145, 4, '10/03/2017')
+   INTO Videouri (id_v, nr_likeuri, durata, data_postare) VALUES (4, 22564, 4, '10/04/2017')
+   INTO Videouri (id_v, nr_likeuri, durata, data_postare) VALUES (5, 17586, 2, '08/28/2017')
+SELECT 1 FROM DUAL;
+
+
+
+CREATE TABLE Alesii_Publicului (
+id_a number(2) CONSTRAINT PK_Alesii_Publicului PRIMARY KEY,
+nume varchar2(30) NOT NULL,
+prenume varchar2(30) NOT NULL,
+CNP varchar2(13) NOT NULL,
+telefon varchar2(10) NOT NULL,
+adresa varchar2(50) NOT NULL,
+id_v number(2) NOT NULL,
+CONSTRAINT FK_Videouri FOREIGN KEY (id_v) REFERENCES Videouri(id_v)
+);
+
+INSERT ALL
+   INTO Alesii_Publicului (id_a, nume, prenume, CNP, telefon, adresa, id_v) VALUES (1, 'Popescu', 'Ion', '1900510171719', '0745566621', 'Calea Givitei, Bucuresti', 1)
+   INTO Alesii_Publicului (id_a, nume, prenume, CNP, telefon, adresa, id_v) VALUES (2, 'Grigore', 'Mihai', '1850506151412', '0756248523', 'Bulevardul Ion, Cluj', 2)
+   INTO Alesii_Publicului (id_a, nume, prenume, CNP, telefon, adresa, id_v) VALUES (3, 'Jatca', 'David', '1911005141618', '0748635589', 'Aeriene, Iasi', 3)
+   INTO Alesii_Publicului (id_a, nume, prenume, CNP, telefon, adresa, id_v) VALUES (4, 'Sima', 'George', '1901212171514', '0781623564', 'Calea Noilor, timisoara', 4)
+   INTO Alesii_Publicului (id_a, nume, prenume, CNP, telefon, adresa, id_v) VALUES (5, 'Enache', 'Ion', '1870309181918', '0756898457', 'Centru Vechi, Bucuresti', 5)
+SELECT 1 FROM DUAL;
+
+CREATE TABLE Episoade (
+id_ep number(2) CONSTRAINT PK_Episoade PRIMARY KEY,
+data_difuzare date NOT NULL,
+durata number(2) NOT NULL,
+id_e number(2) NOT NULL,
+id_a number(2) NOT NULL,
+CONSTRAINT FK_Echipe FOREIGN KEY (id_e) REFERENCES Echipe(id_e),
+CONSTRAINT FK_Alesii_Publicului FOREIGN KEY (id_a) REFERENCES Alesii_Publicului(id_a)
+);
+
+INSERT ALL
+   INTO Episoade (id_ep, data_difuzare, durata, id_e, id_a) VALUES (1, '11/10/2017', 44, 5, 1)
+   INTO Episoade (id_ep, data_difuzare, durata, id_e, id_a) VALUES (2, '11/17/2017', 44, 2, 2)
+   INTO Episoade (id_ep, data_difuzare, durata, id_e, id_a) VALUES (3, '11/24/2017', 44, 3, 3)
+   INTO Episoade (id_ep, data_difuzare, durata, id_e, id_a) VALUES (4, '01/01/2018', 44, 4, 4)
+   INTO Episoade (id_ep, data_difuzare, durata, id_e, id_a) VALUES (5, '08/01/2018', 44, 1, 5)
+SELECT 1 FROM DUAL;
+
+
+
+CREATE TABLE Public_Speakeri (
+id_p number(2) CONSTRAINT PK_Public_Speakeri PRIMARY KEY,
+nume varchar2(30) NOT NULL,
+prenume varchar2(30) NOT NULL,
+email varchar2(30) NOT NULL,
+nr_discursuri_tinute number(2) NOT NULL,
+id_e number(2) NOT NULL,
+CONSTRAINT FK_Echipe2 FOREIGN KEY (id_e) REFERENCES Echipe(id_e)
+);
+
+INSERT ALL
+   INTO Public_Speakeri (id_p, nume, prenume, email, nr_discursuri_tinute, id_e) VALUES (1, 'Anghel', 'Albert','anghelalbert@ygmail',15,5)
+   INTO Public_Speakeri (id_p, nume, prenume, email, nr_discursuri_tinute, id_e) VALUES (2, 'Crisan', 'Marius','crisanmarius@ygmail',5,1)
+   INTO Public_Speakeri (id_p, nume, prenume, email, nr_discursuri_tinute, id_e) VALUES (3, 'Andrei', 'Ion','andreiion@ygmail',23,2)
+   INTO Public_Speakeri (id_p, nume, prenume, email, nr_discursuri_tinute, id_e) VALUES (4, 'Marin', 'Gica','maringica@ygmail',12,4)
+   INTO Public_Speakeri (id_p, nume, prenume, email, nr_discursuri_tinute, id_e) VALUES (5, 'Ciorbea', 'Florin','ciorbeaflorin@ygmail',14,3)
+   INTO Public_Speakeri (id_p, nume, prenume, email, nr_discursuri_tinute, id_e) VALUES (6, 'Andreiescu', 'Mihai','andreiescumihai@ygmail',13,1)
+SELECT 1 FROM DUAL;
+
+CREATE TABLE Experti_In_Moda (
+id_exp number(2) CONSTRAINT Experti_In_Moda PRIMARY KEY,
+nume varchar2(30) NOT NULL,
+prenume varchar2(30) NOT NULL,
+CNP varchar2(13) NOT NULL,
+id_e number(2) NOT NULL,
+CONSTRAINT FK_Echipe3 FOREIGN KEY (id_e) REFERENCES Echipe(id_e)
+);
+
+INSERT ALL
+   INTO Experti_In_Moda (id_exp, nume, prenume, CNP, id_e) VALUES (1, 'Popovici', 'Ana','0920305161514',1)
+   INTO Experti_In_Moda (id_exp, nume, prenume, CNP, id_e) VALUES (2, 'Poiana', 'Batrice','0841223161412',5)
+   INTO Experti_In_Moda (id_exp, nume, prenume, CNP, id_e) VALUES (3, 'Andrei', 'Jack','1861105251524',2)
+   INTO Experti_In_Moda (id_exp, nume, prenume, CNP, id_e) VALUES (4, 'Covrig', 'Gigel','1921013121514',4)
+   INTO Experti_In_Moda (id_exp, nume, prenume, CNP, id_e) VALUES (5, 'Angel', 'Florin','1851214151819',3)
+   INTO Experti_In_Moda (id_exp, nume, prenume, CNP, id_e) VALUES (6, 'Bors', 'Mihail','1901226151514',5)
+SELECT 1 FROM DUAL;
+
+
+CREATE TABLE Cameramani (
+id_c number(2) CONSTRAINT PK_Cameramani PRIMARY KEY,
+nume varchar2(30) NOT NULL,
+prenume varchar2(30) NOT NULL,
+telefon varchar2(10) NOT NULL,
+specializare varchar2(50) NOT NULL,
+id_e number(2) NOT NULL,
+CONSTRAINT FK_Echipe4 FOREIGN KEY (id_e) REFERENCES Echipe(id_e)
+);
+
+
+INSERT ALL
+   INTO Cameramani (id_c, nume, prenume, telefon, specializare, id_e) VALUES (1, 'Giusca', 'Stefan', '0752369568', 'Intro',2)
+   INTO Cameramani (id_c, nume, prenume, telefon, specializare, id_e) VALUES (2, 'Poiana', 'Andru', '0741256528', 'Outro',5)
+   INTO Cameramani (id_c, nume, prenume, telefon, specializare, id_e) VALUES (3, 'Andrusca', 'George', '0742589632', 'Outro',1)
+   INTO Cameramani (id_c, nume, prenume, telefon, specializare, id_e) VALUES (4, 'BIll', 'Gigel', '0784568525', 'Intro',3)
+   INTO Cameramani (id_c, nume, prenume, telefon, specializare, id_e) VALUES (5, 'Girgore', 'Florin', '0762589636', 'Outro',4)
+SELECT 1 FROM DUAL;
+
+CREATE TABLE Hairstyler (
+id_h number(2) CONSTRAINT PK_Hairstyler PRIMARY KEY,
+nume varchar2(30) NOT NULL,
+prenume varchar2(30) NOT NULL,
+telefon varchar2(10) NOT NULL,
+ani_de_practica number(2) NOT NULL,
+id_e number(2) NOT NULL,
+CONSTRAINT FK_Echipe5 FOREIGN KEY (id_e) REFERENCES Echipe(id_e)
+);
+
+DROP TABLE Hairstyler;
+
+CREATE TABLE Hairstyleri (
+id_h number(2) CONSTRAINT PK_Hairstyleri PRIMARY KEY,
+nume varchar2(30) NOT NULL,
+prenume varchar2(30) NOT NULL,
+telefon varchar2(10) NOT NULL,
+ani_de_practica number(2) NOT NULL,
+id_e number(2) NOT NULL,
+CONSTRAINT FK_Echipe5 FOREIGN KEY (id_e) REFERENCES Echipe(id_e)
+);
+
+INSERT ALL
+   INTO Hairstyleri (id_h, nume, prenume, telefon, ani_de_practica, id_e) VALUES (1, 'Ganea', 'Andrei', '0752362356', 5, 2)
+   INTO Hairstyleri (id_h, nume, prenume, telefon, ani_de_practica, id_e) VALUES (2, 'Purcea', 'Andru', '0741256895', 10, 5)
+   INTO Hairstyleri (id_h, nume, prenume, telefon, ani_de_practica, id_e) VALUES (3, 'Anglu', 'Gica', '0742569586', 1, 1)
+   INTO Hairstyleri (id_h, nume, prenume, telefon, ani_de_practica, id_e) VALUES (4, 'Bebe', 'Garcea', '0784523562', 20, 3)
+   INTO Hairstyleri (id_h, nume, prenume, telefon, ani_de_practica, id_e) VALUES (5, 'Ghinea', 'Florian', '0762584369', 18, 4)
+SELECT 1 FROM DUAL;
+
+CREATE TABLE Articole_Vestimentare (
+id_art number(2) CONSTRAINT PK_Articole_Vestimentare PRIMARY KEY,
+denumire varchar2(30) NOT NULL,
+marime varchar2(15) NOT NULL
+)
+
+INSERT ALL
+   INTO Articole_Vestimentare (id_art, denumire, marime) VALUES (1, 'Blugi', 'M, L, XL')
+   INTO Articole_Vestimentare (id_art, denumire, marime) VALUES (2, 'Tricou', 'S, M')
+   INTO Articole_Vestimentare (id_art, denumire, marime) VALUES (3, 'Adidasi', '42, 43, 44, 45')
+   INTO Articole_Vestimentare (id_art, denumire, marime) VALUES (4, 'Pantofi', '41, 42, 43, 44')
+   INTO Articole_Vestimentare (id_art, denumire, marime) VALUES (5, 'Costum', 'M, L, XL, XXL')
+   INTO Articole_Vestimentare (id_art, denumire, marime) VALUES (6, 'Plover', 'S, M, L')
+   INTO Articole_Vestimentare (id_art, denumire, marime) VALUES (7, 'Camasa', 'M, L, XL')
+SELECT 1 FROM DUAL;
+
+CREATE TABLE Cosmetice (
+id_cos number(2) CONSTRAINT PK_Cosmetice PRIMARY KEY,
+denumire varchar2(30) NOT NULL,
+producator varchar2(15) NOT NULL
+)
+
+INSERT ALL
+   INTO Cosmetice (id_cos, denumire, producator) VALUES (1, 'Crema ingrijire maini', 'Nivea')
+   INTO Cosmetice (id_cos, denumire, producator) VALUES (2, 'Crema ingrijire fata', 'Nivea')
+   INTO Cosmetice (id_cos, denumire, producator) VALUES (3, 'Polmade', 'BlueMan')
+   INTO Cosmetice (id_cos, denumire, producator) VALUES (4, 'Ceara', 'Extreme')
+   INTO Cosmetice (id_cos, denumire, producator) VALUES (5, 'Sampon', 'Farmec')
+   INTO Cosmetice (id_cos, denumire, producator) VALUES (6, 'Masca de par', 'Farmec')
+   INTO Cosmetice (id_cos, denumire, producator) VALUES (7, 'Deodorant', 'STR8')
+SELECT 1 FROM DUAL;
+
+CREATE TABLE Sponsori (
+id_s number(2) CONSTRAINT PK_Sponsori PRIMARY KEY,
+nume varchar2(30) NOT NULL,
+localitate varchar2(50) NOT NULL,
+id_art number(2),
+id_cos number(2),
+CONSTRAINT FK_Cosmetice FOREIGN KEY (id_cos) REFERENCES Cosmetice(id_cos),
+CONSTRAINT FK_Articole_Vestimentare FOREIGN KEY (id_art) REFERENCES Articole_Vestimentare(id_art),
+CONSTRAINT Arc CHECK( (id_art IS NOT NULL and id_cos IS NULL) OR (id_cos IS NOT NULL and id_art IS NULL) )
+)
+
+ALTER TABLE 
+   Sponsori 
+MODIFY 
+( 
+  localitate varchar2(30)
+);
+
+
+INSERT ALL
+   INTO Sponsori (id_s, nume, localitate, id_art) VALUES (1, 'Fermieru', 'Bucuresti', '1')
+   INTO Sponsori (id_s, nume, localitate, id_art) VALUES (2, 'Zara Shop','Bucuresti', '2')
+   INTO Sponsori (id_s, nume, localitate, id_art) VALUES (3, 'Germa', 'Cluj', '3')
+   INTO Sponsori (id_s, nume, localitate, id_art) VALUES (4, 'Big','Bucuresti', '4')
+   INTO Sponsori (id_s, nume, localitate, id_art) VALUES (5, 'FRM','Bucuresti', '5')
+   INTO Sponsori (id_s, nume, localitate, id_art) VALUES (6, 'Altantis', 'Cluj', '6')
+   INTO Sponsori (id_s, nume, localitate, id_art) VALUES (7, 'Bibi', 'Cluj', '7')   
+   INTO Sponsori (id_s, nume, localitate, id_cos) VALUES (8, 'Andrei', 'Iasi', '1')
+   INTO Sponsori (id_s, nume, localitate, id_cos) VALUES (9, 'Sava', 'Timisoara', '2')
+   INTO Sponsori (id_s, nume, localitate, id_cos) VALUES (10, 'Arc','Bucuresti', '3')
+   INTO Sponsori (id_s, nume, localitate, id_cos) VALUES (11, 'Arc','Bucuresti', '4')
+   INTO Sponsori (id_s, nume, localitate, id_cos) VALUES (12, 'Nicolas', 'Iasi', '5')
+   INTO Sponsori (id_s, nume, localitate, id_cos) VALUES (13, 'Gigi','Bucuresti', '6')
+   INTO Sponsori (id_s, nume, localitate, id_cos) VALUES (14, 'Paul', 'Iasi', '7')
+SELECT 1 FROM DUAL;
+
+CREATE TABLE Contracte (
+id_con number(2) CONSTRAINT PK_Contracte PRIMARY KEY,
+data_expirare date NOT NULL,
+id_e number(2) NOT NULL,
+id_s number(2) NOT NULL,
+CONSTRAINT FK_Echipe6 FOREIGN KEY (id_e) REFERENCES Echipe(id_e),
+CONSTRAINT FK_Sponsori FOREIGN KEY (id_s) REFERENCES Sponsori(id_s)
+);
+
+INSERT ALL
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (1, '01/10/2018', 1, 4)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (2, '01/24/2018', 2, 5)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (3, '01/17/2018', 3, 3)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (4, '01/01/2018', 4, 2)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (5, '01/11/2018', 5, 1)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (6, '01/24/2018', 4, 7)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (7, '01/22/2018', 3, 6)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (8, '01/21/2018', 5, 8)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (9, '01/12/2018', 1, 10)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (10, '01/09/2018', 2, 11)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (11, '01/04/2018', 1, 9)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (12, '01/14/2018', 2, 14)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (13, '01/27/2018', 4, 13)
+   INTO Contracte (id_con, data_expirare, id_e, id_s) VALUES (14, '01/17/2018', 5, 12)
+SELECT 1 FROM DUAL;
+
+UPDATE Alesii_Publicului
+SET prenume = 'Anderson'
+WHERE nume = 'Popescu';
+
+UPDATE Episoade
+SET data_difuzare = '11/18/2017' 
+WHERE id_ep = 5;
+
+UPDATE Cameramani
+SET specializare = 'Outro' 
+WHERE specializare = 'Intro';
+
+UPDATE Cameramani
+SET specializare = 'Intro' 
+WHERE id_e BETWEEN 0 and 3 ;
+
+UPDATE Public_Speakeri
+SET nr_discursuri_tinute = nr_discursuri_tinute +10
+WHERE prenume = 'Ion';
+
+SELECT * 
+FROM Alesii_publicului;
+
+SELECT * 
+FROM Alesii_publicului
+WHERE CNP LIKE '___05%';
+
+SELECT * 
+FROM Episoade
+WHERE TO_CHAR(data_difuzare,'MM')= 11;
+
+SELECT id_a, nume, prenume, a.id_v
+FROM Alesii_publicului a, Videouri v
+WHERE a.id_v = v.id_v AND durata >= 5;
+
+SELECT COUNT(id_e)
+FROM Contracte
+WHERE id_e = 2;
+
+
+SELECT s.nume
+FROM Contracte c, Sponsori s
+WHERE c.id_e = 2 and s.id_s=c.id_s;
+
+SELECT nume
+FROM Sponsori 
+WHERE id_cos IS NOT NULL;
+
+SELECT nume
+FROM Sponsori 
+WHERE localitate = 'Bucuresti'
+
+SELECT nume
+FROM Sponsori 
+WHERE id_cos IS NULL;
+
+
+SELECT s.nume, a.marime
+FROM Sponsori s, Articole_Vestimentare a
+WHERE a.id_art = s.id_art AND a.denumire = 'Camasa';
+
+SELECT e.id_e, e.nume, h.nume, h.prenume, c.nume, c.prenume
+FROM Echipe e, Hairstyleri h, Cameramani c
+WHERE e.id_e = h.id_e AND e.id_e = c.id_e 
+ORDER BY e.id_e;
+
+SELECT e.nume, ani_de_practica
+FROM Echipe e, Hairstyleri h
+WHERE e.id_e = h.id_e AND ani_de_practica >= 10
+ORDER BY e.nume;
+
+SELECT e.nume, c.nume, c.prenume
+FROM Echipe e, Cameramani c
+WHERE e.id_e = c.id_e AND specializare = 'Intro'
+ORDER BY e.nume;
+
+SELECT nume, prenume, CNP
+FROM Experti_In_Moda
+WHERE CNP LIKE '_90%';
+
+SELECT  nume, prenume, telefon
+FROM Alesii_Publicului 
+WHERE telefon LIKE '074%' or telefon LIKE '075%'
+ORDER BY prenume;
+
+
+ALTER TABLE Echipe ADD slogan varchar2(255);
+
+ALTER TABLE Echipe DROP COLUMN slogan;
